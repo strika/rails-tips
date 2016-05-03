@@ -2,6 +2,24 @@
 
 Surprising or less know things from the Ruby on Rails universe
 
+#### How to send a piece of HTML to a partial?
+
+Do you need to send a piece of HTML to a partial? Perhaps the partial is used
+on a number of places, but you need to show a different message from each place?
+You can use Rails' `capture` helper:
+
+```erb
+<% personalized_message = capture do %>
+  Hi <%= user.name %>! Welcome to the greatest collection of programming books
+  in the world!
+<% end %>
+
+<%= render "greeting", :message => personalized_message %>
+```
+
+Read more about `capture` on the official Rails API
+[documentation](http://api.rubyonrails.org/classes/ActionView/Helpers/CaptureHelper.html#method-i-capture).
+
 #### How to Maximize Firefox in a Selenium Test?
 
 Sometimes an end-to-end browser test will fail on a small screen, but pass when
