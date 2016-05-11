@@ -2,6 +2,39 @@
 
 Surprising or less know things from the Ruby on Rails universe
 
+#### How to DRY up my routes?
+
+Perhaps [routing concerns](http://guides.rubyonrails.org/routing.html#routing-concerns)
+can help you. Concern is like a mixin of routes that you can use inside other
+resources and routes:
+
+```ruby
+concern :taskable do
+  resources :tasks, :only => [:index, :create, :destroy]
+end
+
+resources :users, :concerns => :taskable
+resources :managers, :concerns => :taskable
+resources :admins, :concerns => :taskable
+```
+
+This is the same as:
+
+```ruby
+resources :users do
+  resources :tasks, :only => [:index, :create, :destroy]
+end
+
+resources :managers do
+  resources :tasks, :only => [:index, :create, :destroy]
+end
+
+resources :admins do
+  resources :tasks, :only => [:index, :create, :destroy]
+end
+
+```
+
 #### How to send a piece of HTML to a partial?
 
 Do you need to send a piece of HTML to a partial? Perhaps the partial is used
