@@ -74,3 +74,15 @@ Before do
   end
 end
 ```
+
+#### How to accept a JavaScript dialog in Selenium tests?
+
+Capybara has a neat method called
+[accept_dialog](http://www.rubydoc.info/github/jnicklas/capybara/master/Capybara%2FSession%3Aaccept_alert)
+that will do just what you need. Developers used to lean on different JavaScript
+hacks to accept a JavaScript dialog, but the built in `accept_dialog` method is
+the recommended way.
+
+```ruby
+accept_dialog("Are you sure?")
+```
