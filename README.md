@@ -86,3 +86,33 @@ the recommended way.
 ```ruby
 accept_dialog("Are you sure?")
 ```
+
+#### How to skip assets, helpers and specs when generating a controller?
+
+I rarely need assets, helpers and specs for a new controller. And I don't like
+leaving empty files all over the place. To skip generating those, you can use
+the following options when you generate a new controller:
+
+```bash
+rails g controller Posts --no-assets --no-helper --no-controller-specs
+```
+
+You can also use `skip` instead of `no`:
+
+```bash
+rails g controller Posts --skip-assets --skip-helper --skip-controller-specs
+```
+
+If other developers from your team tend to skip those and you want to save some
+typing, add the following to your `config/application.rb`:
+
+```ruby
+config.generators do |g|
+  g.test_framework nil # skip test framework
+  g.assets false
+  g.helper false
+end
+```
+
+For more options see [Generators](http://guides.rubyonrails.org/generators.html)
+page on [Rails Guides](http://guides.rubyonrails.org/index.html).
