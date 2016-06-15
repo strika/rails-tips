@@ -116,3 +116,38 @@ end
 
 For more options see [Generators](http://guides.rubyonrails.org/generators.html)
 page on [Rails Guides](http://guides.rubyonrails.org/index.html).
+
+#### How to wait for a JavaScript library to load in Selenium tests?
+
+Sometimes you need to wait for a JavaScript library to be fully loaded before
+executing any steps in Selenium tests. To do this, create a helper and make it
+available in your test library of choice (RSpec, Cucumber...):
+
+```ruby
+module WaitForJqueryUjs
+  def wait_for_jquery_ujs
+    Timeout.timeout(Capybara.default_wait_time) do
+      loop until jquery_ujs_loaded?
+    end
+  end
+
+  def jquery_ujs_loaded?
+    page.evaluate_script("jQuery.rails !== undefined")
+  end
+end
+```
+
+Then, in a test, you can use `wait_for_jquery_ujs` before any steps that require
+the library:
+
+```ruby
+wait_for_jquery_ujs
+fill_in "Name", :with => "John Doe"
+click_button "Save"
+```
+
+You can use this pattern to inspect other things in JavaScript. However, you
+should consider leaning on a visible element on a page, instead of executing
+JavaScript code. For example, you application can show a loading indicator
+until everything is fully loaded. In tests, you can wait until the loading
+indicator goes away before executing any steps.
