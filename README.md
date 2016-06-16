@@ -151,3 +151,13 @@ should consider leaning on a visible element on a page, instead of executing
 JavaScript code. For example, you application can show a loading indicator
 until everything is fully loaded. In tests, you can wait until the loading
 indicator goes away before executing any steps.
+
+#### How to add ":type => :model" to all RSpec model specs?
+
+If you're upgrading a gem that's using `:type => :model` metadata internally,
+like shoulda-matchers, this can be useful. Just execute this command in your
+shell:
+
+```bash
+find spec/models -iname "*.rb" -print | xargs sed -ri "s/describe ([A-Z].*) do/describe \1, :type => :model do/g"
+```
