@@ -161,3 +161,24 @@ shell:
 ```bash
 find spec/models -iname "*.rb" -print | xargs sed -ri "s/describe ([A-Z].*) do/describe \1, :type => :model do/g"
 ```
+
+#### How to configure a Rails engine to use RSpec instead of MiniTest when generating new files?
+
+Add this to `engine.rb` in the engine:
+
+```ruby
+config.generators do |g|
+  g.test_framework :rspec
+end
+```
+
+#### How to configure a Rails engine not to generate assets or helpers?
+
+Add this to `engine.rb` in the engine:
+
+```ruby
+config.generators do |g|
+  g.assets false
+  g.helper false
+end
+```
