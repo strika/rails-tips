@@ -171,3 +171,14 @@ config.generators do |g|
   g.test_framework :rspec
 end
 ```
+
+#### How to configure a Rails engine not to generate assets or helpers?
+
+Add this to `engine.rb` in the engine:
+
+```ruby
+config.generators do |g|
+  g.assets false
+  g.helper false
+end
+```
