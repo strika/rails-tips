@@ -190,10 +190,10 @@ To print the last page HTML when a scenario fails, add this after hook to your
 
 ```ruby
 After do |scenario|
-  return unless scenario.failed?
-
-  puts "********* PAGE: **********"
-  puts page.html
+  if scenario.failed?
+    puts "********* PAGE: **********"
+    puts page.html
+  end
 end
 ```
 
