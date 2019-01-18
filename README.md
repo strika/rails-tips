@@ -202,12 +202,12 @@ To print the last 500 lines of `log/test.log`, also add:
 
 ```ruby
 After do |scenario|
-  return unless scenario.failed?
+  if scenario.failed?
+    puts "********* PAGE: **********"
+    puts page.html
 
-  puts "********* PAGE: **********"
-  puts page.html
-
-  puts "********* TEST LOG: **********"
-  puts `tail -n 500 log/test.log`
+    puts "********* TEST LOG: **********"
+    puts `tail -n 500 log/test.log`
+  end
 end
 ```
