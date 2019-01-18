@@ -182,3 +182,32 @@ config.generators do |g|
   g.helper false
 end
 ```
+
+#### Tips for debugging flaky Cucumber scenarios
+
+To print the last page HTML when a scenario fails, add this after hook to your
+`env.rb` file:
+
+```ruby
+After do |scenario|
+  return unless scenario.failed?
+
+  puts "********* PAGE: **********"
+  puts page.html
+end
+```
+
+To print the last 500 lines of `log/test.log`, also add:
+
+
+```ruby
+After do |scenario|
+  return unless scenario.failed?
+
+  puts "********* PAGE: **********"
+  puts page.html
+
+  puts "********* TEST LOG: **********"
+  puts `tail -n 500 log/test.log`
+end
+```
